@@ -10,6 +10,7 @@ using FunShop.Core.Interfaces;
 using FunShop.Core.Specifications;
 using FunShop.Api.Dtos;
 using AutoMapper;
+using FunShop.Api.Helpers;
 
 namespace FunShop.Api.Controllers
 {
@@ -34,12 +35,20 @@ namespace FunShop.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(
+            [FromQuery] ProductSpecParams productParams)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification();
-            var products = await _productsRepo.ListAsync(spec);
+            var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+            var countSpec = new ProductsWithFiltersForCountSpecification(productParams);
 
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+            var totalItems = await _productsRepo.CountAsync(spec);
+            var products = await _productsRepo.ListAsync(countSpec);
+
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+
+
+            return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex,
+                productParams.PageSize, totalItems, data));
 
         }
 

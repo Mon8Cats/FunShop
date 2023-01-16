@@ -6,19 +6,6 @@ namespace FunShop.Core.Specifications
 {
     public class ProductsWithTypesAndBrandsSpecification : BaseSpecifcation<Product>
     {
-        public ProductsWithTypesAndBrandsSpecification()
-        {
-            AddInclude(x => x.ProductType);
-            AddInclude(x => x.ProductBrand);
-        }
-
-        public ProductsWithTypesAndBrandsSpecification(int id)
-            : base(x => x.Id == id)
-        {
-            AddInclude(x => x.ProductType);
-            AddInclude(x => x.ProductBrand);
-        }
-        /*
         public ProductsWithTypesAndBrandsSpecification(ProductSpecParams productParams) : base(x => 
             (string.IsNullOrEmpty(productParams.Search) || x.Name.ToLower().Contains(productParams.Search)) &&
             (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
@@ -52,6 +39,6 @@ namespace FunShop.Core.Specifications
             AddInclude(x => x.ProductType);
             AddInclude(x => x.ProductBrand);
         }
-        */
+        
     }
 }

@@ -8,8 +8,8 @@ namespace FunShop.Core.Specifications
     {
         public BaseSpecifcation()
         {
-            
         }
+
         public BaseSpecifcation(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
@@ -20,7 +20,6 @@ namespace FunShop.Core.Specifications
         public List<Expression<Func<T, object>>> Includes { get; } 
             = new List<Expression<Func<T, object>>>();
 
-        /*
         public Expression<Func<T, object>> OrderBy { get; private set; }
 
         public Expression<Func<T, object>> OrderByDescending { get; private set; }
@@ -30,14 +29,11 @@ namespace FunShop.Core.Specifications
         public int Skip { get; private set; }
 
         public bool IsPagingEnabled { get; private set; }
-        */
 
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
         }
-
-        /*
 
         protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
@@ -55,6 +51,5 @@ namespace FunShop.Core.Specifications
             Take = take;
             IsPagingEnabled = true;
         }
-        */
     }
 }
